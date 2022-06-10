@@ -1,0 +1,90 @@
+﻿@model Biblioteca_EntityFramework.Models.Libro
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Libro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titolo" class="control-label"></label>
+                <input asp-for="Titolo" class="form-control" />
+                <span asp-validation-for="Titolo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data" class="control-label"></label>
+                <input asp-for="Data" class="form-control" />
+                <span asp-validation-for="Data" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="stato" class="control-label"></label>
+                <select asp-for="stato" class="form-control">
+                    <option value=@Stato.Disponibile>Disponibile</option>
+                    <option value=@Stato.InPrestito>In Prestito</option>
+                </select>
+                <span asp-validation-for="stato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ISBN" class="control-label"></label>
+                <input asp-for="ISBN" class="form-control" />
+                <span asp-validation-for="ISBN" class="text-danger"></span>
+            </div>
+            
+
+
+
+
+
+            <button id="addAutore">Aggiungi Autore</button>
+            <div class="form-group" id="autoriGroup"></div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        let i = 0;
+        const autoriGroup = document.getElementById("autoriGroup");
+        document.getElementById("addAutore").addEventListener("click",
+            () =>{
+                event.preventDefault();
+
+                const inputNameLabel = document.createElement("label");
+                inputNameLabel.innerText = "Nome"
+                const inputName = document.createElement("input");
+                inputName.name = "authorsNames-" + i;
+                inputName.type = "text";
+                inputName.classList = "mb-3 form-control";
+
+                const inputLastNameLabel = document.createElement("label");
+                inputLastNameLabel.innerText = "Cognome"
+                const inputLastName = document.createElement("input");
+                inputLastName.name = "authorsLastNames-" + i;
+                inputLastName.type = "text";
+                inputLastName.classList = "mb-3 form-control";
+
+                i++;
+
+                autoriGroup.appendChild(inputNameLabel);
+                autoriGroup.appendChild(inputName);
+
+                autoriGroup.appendChild(inputLastNameLabel);
+                autoriGroup.appendChild(inputLastName);
+            }
+        );
+    </script>
+}
